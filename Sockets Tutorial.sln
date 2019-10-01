@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peer2PeerChat", "Peer2PeerChat\Peer2PeerChat.csproj", "{64A5B99E-03AD-4E22-9812-C14B08F36F94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C469EAE-E275-4CD7-A21C-AAD6B48C09D7}
+	EndGlobalSection
+EndGlobal
