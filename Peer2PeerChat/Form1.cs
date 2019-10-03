@@ -14,7 +14,7 @@ namespace Peer2PeerChat
         Socket connectionSocket = null;
         Socket messageSocket = null;
 
-        // We want to stop listening for incoming connections when we are already connected to someone or if we initiate the connection ourself
+        // We want to stop listening for incoming connections when we are already connected to someone or if we initiate the connection ourselves
         bool stopListening = false;
 
         // These two lines of code will get the local ip address and port number from the config file and store them into global variables
@@ -49,7 +49,7 @@ namespace Peer2PeerChat
             Text = "P2P Chat - " + ipAddress + ":" + port;
         }
 
-        // This method is executed every second. Running this code will accept any pending connection requests to our socket.
+        // This method is for accepting any pending connection requests to our socket.
         private void tmrListenTimer_Tick(object sender, EventArgs e)
         {
             // we only want to listen to connection requests if we aren't connected yet, hence this flag
@@ -62,45 +62,56 @@ namespace Peer2PeerChat
                 {
                     if (messageSocket == null)
                     {
+                        // Once a connection is accepted, a new socket will be created and that socket is 
+                        // what we need to use for communication. We assign this socket to the messageSocket variable
                         messageSocket = connectionSocket.EndAccept(ar);
                         Output("Connected...");
 
+                        // We should stop listening because we already accepted a connection.
                         stopListening = true;
                     }
                 }, connectionSocket);
             }
         }
 
+        // This method will allow us to accept any pending connection requests to our socket.
         private void TmrReceiveMessageTimer_Tick(object sender, EventArgs e)
         {
+            // Before receiving a message, let's check first if we have a functioning communication socket.
             if (messageSocket != null && messageSocket.Connected)
             {
-                // receive incoming message
+                // We create a buffer for storing the raw data we will receive.
                 byte[] buffer = new byte[1000];
 
+                // We tell the socket to check if there are any messages and if there are, 
+                // put the data in the buffer and then run the ReceiveCallback method.
                 messageSocket.BeginReceive(buffer, 0, 1000, SocketFlags.None, new AsyncCallback(ReceiveCallback), buffer);
             }
         }
 
+        // This method is run when the communication socket receives a message.
         private void ReceiveCallback(IAsyncResult asyncResult)
         {
+            // At this point, the data from the message is stored in asyncResult.AsyncState. Let's store in in buffer.
             byte[] buffer = (byte[])asyncResult.AsyncState;
             int bytesRead = messageSocket.EndReceive(asyncResult);
             if (bytesRead > 0)
             {
+                // We convert the data in the buffer into a string
                 string msg = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 Output(msg);
 
-                // Get the rest of the data.  
+                // We check again for more messages and repeat the process to get the rest of the data.  
                 buffer = new byte[1000];
                 messageSocket.BeginReceive(buffer, 0, 1000, 0, new AsyncCallback(ReceiveCallback), buffer);
             }
         }
 
-
+        // If the connect button is clicked, we stop listening to connection attempts and initiate a connection
+        // to the ip address and port specified in the form textboxes.
         private void BtnConnect_Click(object sender, EventArgs e)
         {
-            // stop listening
+            // We stop listening because we want to initiate the connection ourselves
             stopListening = true;
             connectionSocket.Close();
 
@@ -110,7 +121,7 @@ namespace Peer2PeerChat
             messageSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             messageSocket.Bind(endpoint);
 
-            // connect to your buddy's device
+            // connect to the socket specified in the IP address textbox and Port textbox
             IPAddress buddyAddress = IPAddress.Parse(txtIpAddress.Text);
             int buddyPort = int.Parse(txtPort.Text);
             messageSocket.Connect(buddyAddress, buddyPort);
@@ -124,6 +135,7 @@ namespace Peer2PeerChat
             txtMessage.Focus();
         }
 
+        // This method will send a message through the connected socket
         private void BtnSend_Click(object sender, EventArgs e)
         {
             string message = txtMessage.Text;
@@ -142,6 +154,7 @@ namespace Peer2PeerChat
 
         delegate void SetTextCallback(string text);
 
+        // This method displays text to the screen
         private void Output(string text)
         {
             // What all these complicated code does is just to be able to add text to txtOutput 

@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Peer2PeerChat", "Peer2PeerChat\Peer2PeerChat.csproj", "{64A5B99E-03AD-4E22-9812-C14B08F36F94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoServer", "DemoServer\DemoServer.csproj", "{4768641E-0AF0-464C-AA1D-0C16D6206F17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoClient", "DemoClient\DemoClient.csproj", "{EF5FB073-317A-4A9C-A4A4-D2A9501FB4D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64A5B99E-03AD-4E22-9812-C14B08F36F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4768641E-0AF0-464C-AA1D-0C16D6206F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4768641E-0AF0-464C-AA1D-0C16D6206F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4768641E-0AF0-464C-AA1D-0C16D6206F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4768641E-0AF0-464C-AA1D-0C16D6206F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF5FB073-317A-4A9C-A4A4-D2A9501FB4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF5FB073-317A-4A9C-A4A4-D2A9501FB4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF5FB073-317A-4A9C-A4A4-D2A9501FB4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF5FB073-317A-4A9C-A4A4-D2A9501FB4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
