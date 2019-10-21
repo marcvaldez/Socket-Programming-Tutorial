@@ -10,7 +10,7 @@ namespace Peer2PeerChat
     public partial class Form1 : Form
     {
         // We declare two sockets: one for listening for incoming connection requests 
-        // and another for handling the actual communication (i.e. sending and receiving messages)
+        // and another for handling the actual sending and receiving of messages
         Socket connectionSocket = null;
         Socket messageSocket = null;
 
@@ -28,36 +28,36 @@ namespace Peer2PeerChat
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // when the form loads, create a socket and wait for incoming connections
+            // When the form loads, create a socket and wait for incoming connections
             IPAddress localAddress = IPAddress.Parse(ipAddress);
             IPEndPoint endpoint = new IPEndPoint(localAddress, port);
             connectionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             connectionSocket.Bind(endpoint);
             connectionSocket.Listen(1);
 
-            // start the timer for listening to connection requests
+            // Start the timer for listening to connection requests
             tmrListenTimer.Interval = 1000;
             tmrListenTimer.Start();
             tmrListenTimer.Tick += tmrListenTimer_Tick;
 
-            // start the timer for receiving messages
+            // Start the timer for receiving messages
             tmrReceiveMessageTimer.Interval = 200;
             tmrReceiveMessageTimer.Start();
             tmrReceiveMessageTimer.Tick += TmrReceiveMessageTimer_Tick;
 
-            // here we display the ip address and the port number on the top of the form
+            // Here we display the ip address and the port number on the top of the form
             Text = "P2P Chat - " + ipAddress + ":" + port;
         }
 
         // This method is for accepting any pending connection requests to our socket.
         private void tmrListenTimer_Tick(object sender, EventArgs e)
         {
-            // we only want to listen to connection requests if we aren't connected yet, hence this flag
+            // We only want to listen to connection requests if we aren't connected yet, hence this flag
             if (!stopListening)
             {
                 Output("Waiting for connection...");
 
-                // the code inside the curly braces below will run after the socket accepts the connection.
+                // The code inside the curly braces below will run after the socket accepts the connection.
                 connectionSocket.BeginAccept((ar) =>
                 {
                     if (messageSocket == null)
@@ -67,7 +67,7 @@ namespace Peer2PeerChat
                         messageSocket = connectionSocket.EndAccept(ar);
                         Output("Connected...");
 
-                        // We should stop listening because we already accepted a connection.
+                        // We should stop listening once we've already accepted a connection.
                         stopListening = true;
                     }
                 }, connectionSocket);
@@ -139,9 +139,12 @@ namespace Peer2PeerChat
         private void BtnSend_Click(object sender, EventArgs e)
         {
             string message = txtMessage.Text;
-            Output(message);
             byte[] buffer = Encoding.ASCII.GetBytes(message);
             messageSocket.Send(buffer);
+
+            // We output our own message to our own screen to make it more chat-like. Another way to do this is to 
+            // echo every message we receive back to the sender but that would be too complicated for our purposes.
+            Output(message);
 
             // clear the chat input
             txtMessage.Clear();
