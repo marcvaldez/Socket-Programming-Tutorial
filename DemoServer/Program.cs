@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DemoServer
 {
@@ -18,7 +15,7 @@ namespace DemoServer
             connectionSocket.Bind(ipEndPoint);
             connectionSocket.Listen(10);
 
-            Console.WriteLine("Waiting for clients...");
+            Console.WriteLine(ipEndPoint.ToString() + ": Waiting for clients...");
 
             try
             {
@@ -30,14 +27,17 @@ namespace DemoServer
                 // Here we do a loop where we receive data from the socket until there are no available data left to be received
                 do
                 {
+                    // These lines will receive the data from the socket and store them in the "buffer" variable
                     byte[] buffer = new byte[1000];
                     int numberOfBytesReceived = messageSocket.Receive(buffer);
 
+                    // We then convert the raw bytes in the buffer into a string
                     string message = Encoding.UTF8.GetString(buffer, 0, numberOfBytesReceived);
+
                     Console.WriteLine(clientAddress + " said: " + message);
                 } while (messageSocket.Available > 0);
 
-                // We send a response back to the client
+                // After receiving the message, we send a response back to the client.
                 string response = "Congratulations! You have mastered socket programming.";
                 messageSocket.Send(Encoding.UTF8.GetBytes(response));
 

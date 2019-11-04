@@ -116,10 +116,10 @@ namespace Peer2PeerChat
             connectionSocket.Close();
 
             // create a socket for sending messages
-            IPAddress localAddress = IPAddress.Parse(ipAddress);
-            IPEndPoint endpoint = new IPEndPoint(localAddress, port);
+            //IPAddress localAddress = IPAddress.Parse(ipAddress);
+            //IPEndPoint endpoint = new IPEndPoint(localAddress, port);
             messageSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            messageSocket.Bind(endpoint);
+            //messageSocket.Bind(endpoint);
 
             // connect to the socket specified in the IP address textbox and Port textbox
             IPAddress buddyAddress = IPAddress.Parse(txtIpAddress.Text);
