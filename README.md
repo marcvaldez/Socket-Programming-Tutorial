@@ -10,7 +10,7 @@ A socket is one endpoint of a two-way communication link between two programs ru
 
 ### Stream Socket
 - Also called connection-oriented sockets
-- Sends messages through streams (i.e. continue sending and receiving until stream is closed)
+- Sends messages through streams (i.e. continue sending and receiving messages until someone closes the stream)
 - Doesn't care about message boundaries
 - Commonly used for TCP
 
@@ -23,19 +23,18 @@ A socket is one endpoint of a two-way communication link between two programs ru
 - Allows direct sending and receiving of IP packets without any protocol-specific transport layer formatting (basically skips the transport layer)
 - Has no concept of ports
 - Can be used if you want to implement your own transport protocol
-- Also used by network utility programs such as nmap and ping
+- Also used by network utility programs such as nmap, ping, etc.
 
 ## Socket API
 - A collection of functions/methods/commands usually provided by the operating system to enable programs to use sockets and communicate with other programs.
 
-## Where Do Sockets Fit in the OSI or TCP/IP model?
+## Where do sockets fit in the OSI or TCP/IP model?
 ![Sockets in the OSI Model](/docs/SocketsontheOSIModel.png)
 
 ## Berkeley Sockets
 - Originally used as an application programming interface (API) for sockets in the BSD operating system
-- Also known as BSD Socket API
 - Created by a group of researchers in University of California, Berkeley in the 1980s
-- Became the de facto standard for socket APIs and also the basis for most modern socket API implementations such as Linux sockets, POSIX sockets, and Windows sockets (Winsock)
+- Became the de facto standard for socket APIs and also the basis for most modern socket API implementations such as Linux sockets, POSIX sockets, and Windows sockets
 
 ## List of Common Socket API Functions
 
@@ -48,12 +47,24 @@ Binds an IP address and port number to a socket object
 ### connect()
 Establishes a connection to a remote host
 
-### listen() and accept()
-Used by a server to listen and accept incoming connections
+### listen()
+Used by servers to listen for incoming connections
+
+### accept()
+Accepts a connection request from the listen() function and returns a new socket associated with the new connection
+
+### send()
+Sends data through the socket
+
+### recv()
+Receives data from a socket
+
+### close()
+Closes the socket
 
 ### Other common socket functions include:
-- read(), recv(), recvfrom(), or recvmsg()
-- write(), send(), sendto(), or sendmsg()
+- read(), recvfrom(), or recvmsg()
+- write(), sendto(), or sendmsg()
 - close()
 - gethostbyname() and gethostbyaddr()
 - select()
@@ -61,6 +72,7 @@ Used by a server to listen and accept incoming connections
 
 
 Sources:
+
 https://en.wikipedia.org/wiki/Network_socket
 https://docs.oracle.com/javase/tutorial/networking/sockets/definition.html
 http://homepage.smc.edu/morgan_david/cs70/sockets.htm
@@ -71,7 +83,7 @@ https://docs.microsoft.com/en-us/dotnet/framework/network-programming/
 
 # Socket Programming Tutorial using C# and the .Net Framework
 
-In this tutorial, we will create a simple server and a simple client that will communicate with each other using TCP.
+In this tutorial, we will create a simple server app and client app that will communicate with each other using TCP.
 
 The diagram below shows a typical process flow for a TCP client-server application
 
@@ -243,7 +255,9 @@ else
 }
 ```
 
-The above code first validates user input then creates a socket similar to how we did it in the server application. Instead of binding into an IP address and port, we directly call the connect() method.
+The above code first validates user input then creates a socket similar to how we did it in the server application. Instead of binding into an IP address and port, we directly call the socket's connect() method and specify the IP address and port number we want to connect to. The connect() method also automatically assigns the local machine's IP address to the socket and finds an unused ethereal port for the socket to use.
+
+After connecting the socket, we send a message the same way we did in the server application. Then we also create a loop similar to what we did in the server app for reading data from the socket and converting the data into a UTF-8 encoded string. We then display the string containing the server's response by appending it to the contents of the txtResponse textbox.
 
 
 ## Part 3: Putting It All Together
