@@ -11,9 +11,9 @@ This is a project for my Introduction to Networks class in NBCC.
 #### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions)
 #### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
 #### [Socket Operating Modes](#socket-operating-modes)
-#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-processoflow-using-tcp)
+#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-processoflow-using-tcp-1)
 #### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework)
-#### [Challenge](#challenge)
+#### [Challenge](#challenge-1)
 
 ## What is a Socket?
 
