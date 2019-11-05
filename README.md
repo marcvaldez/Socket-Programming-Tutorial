@@ -9,9 +9,11 @@ This is a project for my Introduction to Networks class in NBCC.
 #### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model-1)
 #### [Berkeley Sockets](#berkeley-sockets-1)
 #### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions-1)
+#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-process-flow-using-tcp-1)
+#### [Socket Protocols](#socket-protocols-1)
 #### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
 #### [Socket Operating Modes](#socket-operating-modes-1)
-#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-process-flow-using-tcp-1)
+#### [Microsoft .NET Socket API Implementation](#microsoft-net-socket-api-implementation-1)
 #### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework-1)
 #### [Challenge](#challenge-1)
 
@@ -45,7 +47,7 @@ A socket is one endpoint of a two-way communication link between two programs ru
 ![Sockets in the OSI Model](/docs/SocketsontheOSIModel.png)
 
 ## Berkeley Sockets
-- Originally used as an application programming interface (API) for sockets in the BSD operating system
+- Used as an application programming interface (API) for sockets in the BSD operating system
 - Created by a group of researchers in University of California, Berkeley in the 1980s
 - Became the de facto standard for socket APIs and also the basis for most modern socket API implementations such as Linux sockets, POSIX sockets, and Winsock
 
@@ -78,20 +80,31 @@ Closes the socket
 ### Other common socket functions include:
 - read(), recvfrom(), or recvmsg()
 - write(), sendto(), or sendmsg()
-- close()
 - gethostbyname() and gethostbyaddr()
 - select()
 - poll()
+
+## Diagram of a Typical Socket Process Flow Using TCP
+
+![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
+
+
+## Socket Protocols
+- IPPROTO_TCP for TCP
+- IPPROTO_UDP for UDP
+- Other values include IPPROTO_SCTP and IPPROTO_DCCP.
+
+Note that you can often use the same port number for different protocols.
 
 ## Domains (aka Protocol Family/Address Family) in Berkeley Sockets
 
 ### AF_INET/PF_INET
 - Corresponds to IPv4
-- `AddressFamily.InterNetwork` in the Microsoft .NET implementation
+- `AddressFamily.InterNetwork` in the .NET implementation
 
 ### AF_INET6/PF_INET6
 - Corresponds to IPv6
-- `AddressFamily.InterNetworkV6` in the Microsoft .NET implementation
+- `AddressFamily.InterNetworkV6` in the .NET implementation
 
 ### AF_UNIX/PF_UNIX
 - Corresponds to local sockets (using a file)
@@ -107,12 +120,6 @@ Closes the socket
 - In non-blocking mode, socket functions will not block execution.
 - In .NET, this can be set by assigning `false` to the `Socket.Blocking` property.
 
-
-## Diagram of a Typical Socket Process Flow Using TCP
-
-![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
-
-
 Sources:
 
 https://en.wikipedia.org/wiki/Network_socket
@@ -125,6 +132,60 @@ http://ijcsit.com/docs/Volume%205/vol5issue03/ijcsit20140503462.pdf
 
 https://docs.microsoft.com/en-us/dotnet/framework/network-programming/
 
+# Microsoft .NET Socket API Implementation
+
+## System.Net.Sockets
+
+- The `System.Net.Sockets.Socket` class is an implementation of the Berkeley Sockets API in the .NET framework.
+- In addition to the standard Berkeley Socket functions, it also features methods for asynchronous sending and receiving of data.
+
+## List of Commonly Used Methods in the Socket Class
+
+#### Socket() (Constructor)
+#### Bind()
+#### Listen()
+#### Accept()
+#### Connect()
+#### Send()
+#### Receive()
+#### Shutdown()
+#### Close()
+
+## Commonly Used Asynchronous Methods
+
+#### AcceptAsync(), BeginAccept(), and EndAccept()
+#### SendAsync(), BeginSend(), and EndSend()
+#### ReceiveAsync(), BeginReceive(), and EndReceive()
+
+Asynchronous methods are helpful when you do not want your application to block while waiting for operations such as sending and receiving to complete. These are useful for programs that are event-driven or user-facing such as Windows Forms apps.
+
+The &ast;Async versions of the methods are used if you prefer to code using the [Task-based asynchronous pattern (TAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) which is a style of programming asynchronous code.
+
+The Begin&ast; and End&ast; versions can be used if you prefer to code using the more traditional [APM pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/asynchronous-programming-model-apm).
+
+## Commonly Used Properties of the Socket Class
+
+#### Available
+Gets the amount of data that has been received from the network and is available to be read.
+
+#### Blocking
+Determines the blocking mode of the socket.
+
+#### Connected
+Is `true` if the socket is connected.
+
+#### DontFragment
+Used if you don't want the packets to be fragmented.
+
+#### RemoteEndPoint
+Allows you to get the IP address and port you are connected to on the other end.
+
+#### Ttl
+Gets or sets a value that specifies the Time To Live (TTL) value of Internet Protocol (IP) packets sent by the Socket.
+
+Source:
+
+https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket?view=netframework-4.8
 
 
 # Socket Programming Tutorial using C# and the .Net Framework
