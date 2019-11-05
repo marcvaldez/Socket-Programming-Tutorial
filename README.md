@@ -10,7 +10,7 @@ This is a project for my Introduction to Networks class in NBCC.
 #### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model)
 #### [Berkeley Sockets](#berkeley-sockets)
 #### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions)
-#### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#berkeley-socket-domains-aka-protocol-familyaddress-family)
+#### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
 #### [Socket Operating Modes](#socket-operating-modes)
 #### [Process Flow Diagram of a Typical Client and Server Using Sockets](#process-flow-diagram-of-a-typical-client-and-server-using-sockets)
 #### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework)
