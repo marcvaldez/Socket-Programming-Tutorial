@@ -3,14 +3,14 @@ This is a project for my Introduction to Networks class in NBCC.
 
 ## Table of Contents
 
-#### [What is a Socket?](#what-is-a-socket)
-#### [Types of Sockets](#types-of-sockets)
-#### [Socket API](#socket-api)
-#### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model)
-#### [Berkeley Sockets](#berkeley-sockets)
-#### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions)
+#### [What is a Socket?](#what-is-a-socket-1)
+#### [Types of Sockets](#types-of-sockets-1)
+#### [Socket API](#socket-api-1)
+#### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model-1)
+#### [Berkeley Sockets](#berkeley-sockets-1)
+#### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions-1)
 #### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
-#### [Socket Operating Modes](#socket-operating-modes)
+#### [Socket Operating Modes](#socket-operating-modes-1)
 #### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-process-flow-using-tcp-1)
 #### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework-1)
 #### [Challenge](#challenge-1)
