@@ -159,6 +159,8 @@ https://docs.microsoft.com/en-us/dotnet/framework/network-programming/
 
 Asynchronous methods are helpful when you do not want your application to block while waiting for operations such as sending and receiving to complete. These are useful for programs that are event-driven or user-facing such as Windows Forms apps.
 
+When using the asynchronous methods, you may no longer need to set the `Blocking` mode of the socket to `false`.
+
 The &ast;Async versions of the methods are used if you prefer to code using the [Task-based asynchronous pattern (TAP)](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap) which is a style of programming asynchronous code.
 
 The Begin&ast; and End&ast; versions can be used if you prefer to code using the more traditional [APM pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/asynchronous-programming-model-apm).
@@ -169,7 +171,7 @@ The Begin&ast; and End&ast; versions can be used if you prefer to code using the
 Gets the amount of data that has been received from the network and is available to be read.
 
 #### Blocking
-Determines the blocking mode of the socket.
+Gets or sets the blocking mode of the socket. `true` by default.
 
 #### Connected
 Is `true` if the socket is connected.
