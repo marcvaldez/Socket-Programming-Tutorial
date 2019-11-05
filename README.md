@@ -10,13 +10,13 @@ A socket is one endpoint of a two-way communication link between two programs ru
 
 ### Stream Socket
 - Also called connection-oriented sockets
-- Sends messages through streams (i.e. continue sending and receiving messages until someone closes the stream)
+- Sends and receives messages through streams (much like reading/writing data from files)
 - Doesn't care about message boundaries
 - Commonly used for TCP
 
 ### Datagram Socket
 - Also called connectionless sockets
-- Sends messages as independent packets with defined boundaries (i.e. one read = one message)
+- Sends and receives messages as independent packets with defined boundaries (i.e. one read = one message)
 - Commonly used for UDP
 
 ### Raw Socket
@@ -34,9 +34,9 @@ A socket is one endpoint of a two-way communication link between two programs ru
 ## Berkeley Sockets
 - Originally used as an application programming interface (API) for sockets in the BSD operating system
 - Created by a group of researchers in University of California, Berkeley in the 1980s
-- Became the de facto standard for socket APIs and also the basis for most modern socket API implementations such as Linux sockets, POSIX sockets, and Windows sockets
+- Became the de facto standard for socket APIs and also the basis for most modern socket API implementations such as Linux sockets, POSIX sockets, and Winsock
 
-## List of Common Socket API Functions
+## List of Common Berkeley Socket API Functions
 
 ### socket()
 Instantiates a socket object
@@ -70,13 +70,46 @@ Closes the socket
 - select()
 - poll()
 
+## Berkeley Socket Domains (aka Protocol Family/Address Family)
+
+### AF_INET/PF_INET
+- Corresponds to IPv4
+- `AddressFamily.InterNetwork` in the Microsoft .NET implementation
+
+### AF_INET6/PF_INET6
+- Corresponds to IPv6
+- `AddressFamily.InterNetworkV6` in the Microsoft .NET implementation
+
+### AF_UNIX/PF_UNIX
+- Corresponds to local sockets (using a file)
+- Used in UNIX for inter-process communication (IPC)
+
+## Socket Operating Modes
+
+### Blocking Mode
+- When operating in Blocking mode, some socket functions such as accept(), send(), and recv() will block execution until the operation is successful. The accept() function for instance, will wait until a client initiates a connection to the server.
+- In .NET, this can be set by assigning `true` to the `Socket.Blocking` property. This is the default value in .NET.
+
+### Non-Blocking Mode
+- In non-blocking mode, socket functions will not block execution.
+- In .NET, this can be set by assigning `false` to the `Socket.Blocking` property.
+
+
+## Process Flow Diagram of a Typical Client and Server Using Sockets
+
+![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
+
 
 Sources:
 
 https://en.wikipedia.org/wiki/Network_socket
+
 https://docs.oracle.com/javase/tutorial/networking/sockets/definition.html
+
 http://homepage.smc.edu/morgan_david/cs70/sockets.htm
+
 http://ijcsit.com/docs/Volume%205/vol5issue03/ijcsit20140503462.pdf
+
 https://docs.microsoft.com/en-us/dotnet/framework/network-programming/
 
 
@@ -85,11 +118,15 @@ https://docs.microsoft.com/en-us/dotnet/framework/network-programming/
 
 In this tutorial, we will create a simple server app and client app that will communicate with each other using TCP.
 
-The diagram below shows a typical process flow for a TCP client-server application
+To keep our apps simple, the client and server apps we are going to create will follow a slightly different process flow from the diagram shown in the previous article. Our process flow will use the following steps:
 
-![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
+1. The server will run and start listening for connections.
+2. The client will connect to the server and send a message.
+3. The server will receive and display the message from client.
+4. The server will respond with its own message and then close the connection.
+5. The client will receive the server's reponse and display it on the UI.
 
-## Part 1: Creating the server program
+## Part 1: Creating the server application
 
 ### Step 1
 
@@ -101,7 +138,7 @@ Create a new Console app (.NET Framework) project in Visual Studio.
 
 Open the Program.cs file and add the following lines near the top.
 
-```CSharp
+```csharp
 using System.Net;
 using System.Net.Sockets;
 ```
@@ -112,18 +149,18 @@ This will let us use the System.Net and System.Net.Sockets classes is such a way
 
 Add the following lines of code inside the static void Main() method.
 
-```CSharp
+```csharp
 IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
 IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, 55555);
 ```
 
-These lines will create an IPAddress object and IPEndpoint object with an IP address of 127.0.0.1 and a port number of 55555. For now, we will be using the loopback address as the server address to make it easy for us to test the application later. You can change this later if you want to test this on a real network. Also note that the 55555 is just an arbitrary port number. Feel free to use any unused port number on your machine.
+These lines will create an `IPAddress` object and `IPEndpoint` object with an IP address of 127.0.0.1 and a port number of 55555. For now, we will be using the loopback address as the server address to make it easy for us to test the application later. You can change this later if you want to test this on a real network. Also note that the 55555 is just an arbitrary port number. Feel free to use any unused port number on your machine.
 
 ### Step 4
 
 Add the following lines after the lines in Step 3.
 
-```CSharp
+```csharp
 Socket connectionSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 connectionSocket.Bind(ipEndPoint);
 connectionSocket.Listen(10);
@@ -143,7 +180,7 @@ Note that the socket we created will only be used for listening to connections, 
 
 Create the try-catch block in the code below after the code in Step 3.
 
-```CSharp
+```csharp
 try
 {
     Socket messageSocket = connectionSocket.Accept();
@@ -164,7 +201,7 @@ We can get the address of the client by accessing the RemoteEndpoint property of
 
 Inside the try-catch block right at the end, add the following code.
 
-```CSharp
+```csharp
 do
 {
     byte[] buffer = new byte[1000];
@@ -182,7 +219,7 @@ The code above uses a do-while loop to process messages from the socket until we
 
 Add the following code after the do-while loop.
 
-```CSharp
+```csharp
 string response = "Congratulations! You have mastered socket programming.";
 messageSocket.Send(Encoding.UTF8.GetBytes(response));
 
@@ -196,7 +233,7 @@ In this code, we create a string response message and convert it to a byte array
 
 Finally, add the following lines at the end, after the catch block.
 
-```CSharp
+```csharp
 Console.WriteLine();
 Console.WriteLine("Press ENTER to continue...");
 Console.Read();
@@ -212,13 +249,13 @@ In the same solution as our server application, create a new Windows Forms appli
 
 ![Client user interface](/docs/democlientui.png)
 
-Name the "Connect" button as btnConnect and the textboxes as txtIpAddress, txtPort, txtMessage and txtResponse.
+Name the "Connect" button as `btnConnect` and the textboxes as `txtIpAddress`, `txtPort`, `txtMessage` and `txtResponse`.
 
 ### Step 2
 
 Add the following code to the click event handler of btnConnect.
 
-```CSharp
+```csharp
 if (!IPAddress.TryParse(txtIpAddress.Text, out IPAddress ipAddress))
 {
     MessageBox.Show("Please enter a valid IP Address.");
@@ -264,11 +301,13 @@ After connecting the socket, we send a message the same way we did in the server
 
 ### Step 1
 
-Run both the server app and the client app at the same time. If the client and server apps are in the same solutions, you can easily do this by setting multiple startup projects in your solution.
+Run both the server app and the client app at the same time. If the client and server apps are in the same solution, you can easily do this by setting multiple startup projects in your solution.
 
 ![Multiple startup projects in Visual Studio](/docs/multiplestartups.png)
 
 To get to the Solution Property Pages dialog, right-click on the solution in the Solution Explorer and click on "Set Startup Projects..."
+
+![Solution context menu](/docs/rightclicksolution.png)
 
 ### Step 2
 
