@@ -2,6 +2,19 @@ First draft
 # Socket Programming
 This is a project for my Introduction to Networks class in NBCC.
 
+## Table of Contents
+
+#### [What is a Socket?](#what-is-a-socket)
+#### [Types of Sockets](#types-of-sockets)
+#### [Socket API](#socket-api)
+#### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model)
+#### [Berkeley Sockets](#berkeley-sockets)
+#### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions)
+#### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#berkeley-socket-domains-aka-protocol-familyaddress-family)
+#### [Socket Operating Modes](#socket-operating-modes)
+#### [Process Flow Diagram of a Typical Client and Server Using Sockets](#process-flow-diagram-of-a-typical-client-and-server-using-sockets)
+#### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework)
+
 ## What is a Socket?
 
 A socket is one endpoint of a two-way communication link between two programs running on the network.
@@ -70,7 +83,7 @@ Closes the socket
 - select()
 - poll()
 
-## Berkeley Socket Domains (aka Protocol Family/Address Family)
+## Domains (aka Protocol Family/Address Family) in Berkeley Sockets
 
 ### AF_INET/PF_INET
 - Corresponds to IPv4
@@ -126,11 +139,11 @@ To keep our apps simple, the client and server apps we are going to create will 
 4. The server will respond with its own message and then close the connection.
 5. The client will receive the server's reponse and display it on the UI.
 
-## Part 1: Creating the server application
+## Part 1: Creating the Server Application
 
 ### Step 1
 
-Create a new Console app (.NET Framework) project in Visual Studio.
+Create a new Console App (.NET Framework) project in Visual Studio.
 
 ![Creating a console application](/docs/step1.png)
 
@@ -143,11 +156,11 @@ using System.Net;
 using System.Net.Sockets;
 ```
 
-This will let us use the System.Net and System.Net.Sockets classes is such a way that we don't have to type the namespaces in our code.
+This will let us use the `System.Net` and `System.Net.Sockets` classes in such a way that we don't have to type the namespaces in our code.
 
 ### Step 3
 
-Add the following lines of code inside the static void Main() method.
+Add the following lines of code inside the `static void Main()` method.
 
 ```csharp
 IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
@@ -174,11 +187,11 @@ The second line binds the IP address and port we specified in Step 3 to the sock
 
 The third line tells the socket to listen for any connection attempts and have up to 10 connections in the listening queue.
 
-Note that the socket we created will only be used for listening to connections, hence the name "connectionSocket". We will use a different socket for sending and receiving messages and it will be created on the next step.
+Note that the socket we created will only be used for listening to connection requests, hence the name "connectionSocket". We will use a different socket for sending and receiving messages and it will be created on the next step.
 
 ### Step 5
 
-Create the try-catch block in the code below after the code in Step 3.
+Create the try-catch block in the code below after the code in Step 4.
 
 ```csharp
 try
@@ -292,9 +305,9 @@ else
 }
 ```
 
-The above code first validates user input then creates a socket similar to how we did it in the server application. Instead of binding into an IP address and port, we directly call the socket's connect() method and specify the IP address and port number we want to connect to. The connect() method also automatically assigns the local machine's IP address to the socket and finds an unused ethereal port for the socket to use.
+The above code first validates user input and then creates a socket similar to how we did it in the server application. Instead of binding into an IP address and port, we directly call the socket's connect() method and specify the IP address and port number we want to connect to. The connect() method also automatically assigns the local machine's IP address to the socket and finds an unused ethereal port for the socket to use.
 
-After connecting the socket, we send a message the same way we did in the server application. Then we also create a loop similar to what we did in the server app for reading data from the socket and converting the data into a UTF-8 encoded string. We then display the string containing the server's response by appending it to the contents of the txtResponse textbox.
+After connecting to the server, we send a message the same way we did in the server application. Then we also create a loop similar to what we did in the server app for reading data from the socket and converting the data into a UTF-8 encoded string. We then display the string containing the server's response by appending it to the contents of the txtResponse textbox.
 
 
 ## Part 3: Putting It All Together
@@ -319,3 +332,11 @@ Fill in the server IP address and port number on the client app. Enter your mess
 
 If everything goes well, you should be able to see the client's message on the server app and the server's response in the output textbox on the client app.
 
+
+## Challenge
+
+Try implementing the following improvements to the client and server apps to practice your socket programming skills:
+
+- Add a "Disconnect" button to client app and make the client and server continue exchanging messages until the "Disconnect" button is clicked.
+- Modify the server app to make it able to connect to multiple clients.
+- Convert the client app into a peer-to-peer chat program by adding some of the server code to the client. (A working peer-to-peer chat program is included in this tutorial. You can download it from https://github.com/marcvaldez/Socket-Programming-Tutorial.)
