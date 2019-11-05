@@ -1,4 +1,3 @@
-First draft
 # Socket Programming
 This is a project for my Introduction to Networks class in NBCC.
 
@@ -12,8 +11,9 @@ This is a project for my Introduction to Networks class in NBCC.
 #### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions)
 #### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
 #### [Socket Operating Modes](#socket-operating-modes)
-#### [Process Flow Diagram of a Typical Client and Server Using Sockets](#process-flow-diagram-of-a-typical-client-and-server-using-sockets)
+#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-processoflow-using-tcp)
 #### [Socket Programming Tutorial using C# and the .Net Framework](#socket-programming-tutorial-using-c-and-the-net-framework)
+#### [Challenge](#challenge)
 
 ## What is a Socket?
 
@@ -108,7 +108,7 @@ Closes the socket
 - In .NET, this can be set by assigning `false` to the `Socket.Blocking` property.
 
 
-## Process Flow Diagram of a Typical Client and Server Using Sockets
+## Diagram of a Typical Socket Process Flow Using TCP
 
 ![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
 
