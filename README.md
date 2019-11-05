@@ -9,7 +9,7 @@ This is a project for my Introduction to Networks class in NBCC.
 #### [Where do sockets fit in the OSI or TCP/IP model?](#where-do-sockets-fit-in-the-osi-or-tcpip-model-1)
 #### [Berkeley Sockets](#berkeley-sockets-1)
 #### [List of Common Berkeley Socket API Functions](#list-of-common-berkeley-socket-api-functions-1)
-#### [Diagram of a Typical Socket Process Flow Using TCP](#diagram-of-a-typical-socket-process-flow-using-tcp-1)
+#### [Diagrams of Typical Socket API Call Sequences](#diagrams-of-typical-socket-api-call-sequences-1)
 #### [Socket Protocols](#socket-protocols-1)
 #### [Domains (aka Protocol Family/Address Family) in Berkeley Sockets](#domains-aka-protocol-familyaddress-family-in-berkeley-sockets-1)
 #### [Socket Operating Modes](#socket-operating-modes-1)
@@ -84,17 +84,22 @@ Closes the socket
 - select()
 - poll()
 
-## Diagram of a Typical Socket Process Flow Using TCP
+## Diagrams of Typical Socket API Call Sequences
 
-![Socket Flow Diagram](/docs/SocketFlowDiagram.png)
+### TCP Call Sequence
+![TCP Socket Flow Diagram](/docs/SocketFlowDiagram.png)
 
+### UDP Call Sequence
+
+Note the absense of connection-specific socket calls such as connect(), listen(), and accept() in the UDP diagram.
+![UDP Socket Flow Diagram](/docs/SocketFlowDiagramUDP.png)
 
 ## Socket Protocols
 - IPPROTO_TCP for TCP
 - IPPROTO_UDP for UDP
 - Other values include IPPROTO_SCTP and IPPROTO_DCCP.
 
-Note that you can often use the same port number for different protocols.
+Note that you can use the same port number for different protocols.
 
 ## Domains (aka Protocol Family/Address Family) in Berkeley Sockets
 
