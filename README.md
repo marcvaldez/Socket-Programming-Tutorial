@@ -1,3 +1,6 @@
+Update: 11/08/2019
+This ReadMe will no longer be updated. The project has moved to http://codingismy.trade.
+
 # Socket Programming
 This is a project for my Introduction to Networks class in NBCC.
 
