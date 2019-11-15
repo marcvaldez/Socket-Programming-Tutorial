@@ -1,8 +1,3 @@
-Update 11/08/2019: The project has moved to http://codingismy.trade.
-##### [All About Network Sockets](http://www.codingismy.trade/articles/article1.html)
-##### [Microsoft .NET Socket API Implementation](http://www.codingismy.trade/articles/article2.html)
-##### [Socket Programming Tutorial using C# and the .Net Framework](http://www.codingismy.trade/tutorials/tutorial1.html)
-
 # Socket Programming
 This is a project for my Introduction to Networks class in NBCC.
 
@@ -36,7 +31,7 @@ A socket is one endpoint of a two-way communication link between two programs ru
 
 ### Datagram Socket
 - Also called connectionless sockets
-- Sends and receives messages as independent packets with defined boundaries (i.e. one read = one message)
+- Sends and receives messages as independent datagrams with defined boundaries
 - Commonly used for UDP
 
 ### Raw Socket
