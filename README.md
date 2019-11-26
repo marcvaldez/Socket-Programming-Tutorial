@@ -1,3 +1,4 @@
+![License](https://img.shields.io/github/license/marcvaldez/socket-programming-tutorial) ![Code Size](https://img.shields.io/github/languages/code-size/marcvaldez/socket-programming-tutorial) ![Repo Size](https://img.shields.io/github/repo-size/marcvaldez/socket-programming-tutorial) ![Last Commit](https://img.shields.io/github/last-commit/marcvaldez/socket-programming-tutorial)
 # Socket Programming
 This is a project for my Introduction to Networks class in NBCC.
 
